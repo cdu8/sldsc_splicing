@@ -35,6 +35,9 @@
 <script src="site_libs/dt-core-1.10.16/js/jquery.dataTables.min.js"></script>
 <link href="site_libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
 <script src="site_libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+<link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
+<script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
+<script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
 
 <link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/master/img/reproducible.png">
 <!-- Add a small amount of space between sections. -->
@@ -307,7 +310,13 @@ div.tocify {
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/cdu8/sldsc_splicing">
+    <span class="fa fa-github"></span>
+     
+    Source code
+  </a>
+</li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -435,16 +444,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrong8d7f0a7"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> 8d7f0a7 </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomcdu8sldscsplicingtree12a0048eeda24f4ef2fc9dc0abb3898a95bd84edtargetblank12a0048a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/cdu8/sldsc_splicing/tree/12a0048eeda24f4ef2fc9dc0abb3898a95bd84ed" target="_blank">12a0048</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrong8d7f0a7" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomcdu8sldscsplicingtree12a0048eeda24f4ef2fc9dc0abb3898a95bd84edtargetblank12a0048a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version 8d7f0a7. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/cdu8/sldsc_splicing/tree/12a0048eeda24f4ef2fc9dc0abb3898a95bd84ed" target="_blank">12a0048</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -495,7 +504,41 @@ Message
 Rmd
 </td>
 <td>
-8d7f0a7
+<a href="https://github.com/cdu8/sldsc_splicing/blob/12a0048eeda24f4ef2fc9dc0abb3898a95bd84ed/analysis/sldsc.Rmd" target="_blank">12a0048</a>
+</td>
+<td>
+cdu8
+</td>
+<td>
+2020-08-20
+</td>
+<td>
+S-LDSC analysis
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/cdu8/sldsc_splicing/6035c05b3d97b15e41ada37be587cb78af54c554/docs/sldsc.html" target="_blank">6035c05</a>
+</td>
+<td>
+cdu8
+</td>
+<td>
+2020-08-20
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/cdu8/sldsc_splicing/blob/8d7f0a75d1cb338233cc8f8b854f568ba0683694/analysis/sldsc.Rmd" target="_blank">8d7f0a7</a>
 </td>
 <td>
 cdu8
@@ -516,6 +559,7 @@ S-LDSC analysis
 </div>
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
+<p>I ran S-LDSC on SPIDEX splicing annotations. The SPIDEX database was downloaded from ANNOVAR, and SNPs with a dpsi_zscore of &gt;= 1.645 (p-value of 0.05) were selected. I did this for 11 GWAS: Asthma, BMI, CAD, HDL, Height, Intelligence, IBD, LDL, RA, Schizophrenia, and Type II Diabetes. I used BaselineLD v1.1 for S-LDSC analysis.</p>
 <pre class="r"><code>annot_list &lt;- c(&quot;splicing&quot;)
 trait_name_list &lt;- c(&quot;Asthma&quot;, &quot;BMI&quot;,&quot;CAD&quot;,&quot;HDL&quot;,&quot;Height&quot;,&quot;IBD&quot;,&quot;Intelligence&quot;,&quot;LDL&quot;,&quot;RA&quot;,&quot;Schizophrenia&quot;,&quot;T2D&quot;)</code></pre>
 <pre class="r"><code>library(ggplot2)
@@ -621,8 +665,82 @@ result_sLDSC$Color &lt;- factor(result_sLDSC$Disease, levels = trait_name_list)<
 <script type="application/json" data-for="htmlwidget-578d03fe88b24cf1b205">{"x":{"filter":"none","data":[["Asthma","BMI","CAD","HDL","Height","IBD","Intelligence","LDL","RA","Schizophrenia","T2D"],["splicing","splicing","splicing","splicing","splicing","splicing","splicing","splicing","splicing","splicing","splicing"],["0.005","0.005","0.005","0.005","0.005","0.005","0.005","0.005","0.005","0.005","0.005"],[" 0.0115"," 0.0224"," 0.0412"," 0.0484","-0.0047"," 0.0809"," 0.0130"," 0.0136"," 0.0746"," 0.0012"," 0.0157"],["0.0441","0.0126","0.0285","0.0302","0.0145","0.0407","0.0099","0.0379","0.0492","0.0104","0.0232"],[" 2.32"," 4.51"," 8.29"," 9.73","-0.94","16.26"," 2.61"," 2.74","14.99"," 0.23"," 3.16"],["8.9","2.5","5.7","6.1","2.9","8.2","2.0","7.6","9.9","2.1","4.7"],["0.881","0.164","0.205","0.157","0.508","0.061","0.420","0.815","0.154","0.714","0.642"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Disease<\/th>\n      <th>Category<\/th>\n      <th>Prop._SNPs<\/th>\n      <th>Prop._h2<\/th>\n      <th>Prop._h2_std_error<\/th>\n      <th>Enrichment<\/th>\n      <th>Enrichment_std_error<\/th>\n      <th>Enrichment_p<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"keys":true,"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>ggplot_enrichment(result_sLDSC, title = &quot;&quot;)</code></pre>
 <p><img src="figure/sldsc.Rmd/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-1">
+Past versions of unnamed-chunk-5-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-5-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/cdu8/sldsc_splicing/blob/6035c05b3d97b15e41ada37be587cb78af54c554/docs/figure/sldsc.Rmd/unnamed-chunk-5-1.png" target="_blank">6035c05</a>
+</td>
+<td>
+cdu8
+</td>
+<td>
+2020-08-20
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>ggplot_log2_enrichment(result_sLDSC, title = &quot;&quot;)</code></pre>
 <p><img src="figure/sldsc.Rmd/unnamed-chunk-5-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-2">
+Past versions of unnamed-chunk-5-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-5-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/cdu8/sldsc_splicing/blob/6035c05b3d97b15e41ada37be587cb78af54c554/docs/figure/sldsc.Rmd/unnamed-chunk-5-2.png" target="_blank">6035c05</a>
+</td>
+<td>
+cdu8
+</td>
+<td>
+2020-08-20
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
