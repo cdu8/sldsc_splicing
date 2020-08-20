@@ -8,6 +8,7 @@ editor_options:
 ---
 
 ## Introduction
+I ran S-LDSC on SPIDEX splicing annotations. The SPIDEX database was downloaded from ANNOVAR, and SNPs with a dpsi_zscore of >= 1.645 (p-value of 0.05) were selected. I did this for 11 GWAS: Asthma, BMI, CAD, HDL, Height, Intelligence, IBD, LDL, RA, Schizophrenia, and Type II Diabetes. I used BaselineLD v1.1 for S-LDSC analysis.
 
 ```{r}
 annot_list <- c("splicing")
