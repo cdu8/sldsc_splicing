@@ -1,0 +1,128 @@
+---
+title: "S-LDSC analysis to estimate the enrichment of GWAS variants in predicted splicing variants"
+author: "Christie Du"
+date: "2020-08-20"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## Introduction
+
+```{r}
+annot_list <- c("splicing")
+trait_name_list <- c("Asthma", "BMI","CAD","HDL","Height","IBD","Intelligence","LDL","RA","Schizophrenia","T2D")
+```
+
+```{r}
+library(ggplot2)
+library(foreach)
+library(doParallel)
+
+ggplot_enrichment <- function(result_sLDSC, xlim = NULL, title = "Enrichment"){
+  
+  Enrichment <- result_sLDSC$Enrichment
+  Enrichment_CI_L <- result_sLDSC$Enrichment - 1.96*result_sLDSC$Enrichment_std_error
+  Enrichment_CI_H <- result_sLDSC$Enrichment + 1.96*result_sLDSC$Enrichment_std_error
+
+  ## truncate at 1
+  Enrichment[Enrichment < 1] <- 1
+  Enrichment_CI_L[Enrichment_CI_L < 1] <- 1
+  Enrichment_CI_H[Enrichment_CI_H < 1] <- 1
+  
+  p <- ggplot(result_sLDSC, aes(x = Enrichment, y = Disease, colour = Color))+
+    geom_point()+
+    xlab("Enrichment")+
+    ggtitle(title)+
+    geom_errorbarh(aes(xmin = Enrichment - 1.96*Enrichment_std_error, 
+                       xmax = Enrichment + 1.96*Enrichment_std_error, height = 0.1))+ 
+    facet_wrap(Category~.,ncol = 1)+
+    theme_bw()  + 
+    geom_vline(xintercept = 1,linetype="dotted", colour = "red")+
+    theme(axis.ticks = element_blank(),  
+          panel.grid.minor = element_blank(), 
+          axis.line = element_line(colour = "black"), 
+          axis.text = element_text(face="bold",size = 9, colour = "black"),
+          axis.title = element_text(face="bold",size = 9),
+          strip.text = element_text(face="bold",size = 9), 
+          panel.spacing.x = unit(0.6,units = "cm"), 
+          axis.title.y = element_blank(), 
+          legend.position = "none", 
+          plot.title = element_text(hjust = 0.5))
+  if(!is.null(xlim)){
+    p <- p + coord_cartesian(xlim = xlim)
+  }
+  print(p)
+}
+
+ggplot_log2_enrichment <- function(result_sLDSC, xlim = NULL, title = "Enrichment"){
+  
+  result_sLDSC$Enrichment_CI_L <- result_sLDSC$Enrichment - 1.96*result_sLDSC$Enrichment_std_error
+  result_sLDSC$Enrichment_CI_H <- result_sLDSC$Enrichment + 1.96*result_sLDSC$Enrichment_std_error
+
+  ## truncate at 1
+  result_sLDSC$Enrichment[result_sLDSC$Enrichment < 1] <- 1
+  result_sLDSC$Enrichment_CI_L[result_sLDSC$Enrichment_CI_L < 1] <- 1
+  result_sLDSC$Enrichment_CI_H[result_sLDSC$Enrichment_CI_H < 1] <- 1
+
+  p <- ggplot(result_sLDSC, aes(x = log2(Enrichment), y = Disease, colour = Color))+
+    geom_point()+
+    xlab("log2(Enrichment)")+
+    ggtitle(title)+
+    geom_errorbarh(aes(xmin = log2(Enrichment_CI_L), 
+                       xmax = log2(Enrichment_CI_H), height = 0.1))+ 
+    facet_wrap(Category~.,ncol = 1)+
+    theme_bw()  + 
+    geom_vline(xintercept = 0,linetype="dotted", colour = "red")+
+    theme(axis.ticks = element_blank(),  
+          panel.grid.minor = element_blank(), 
+          axis.line = element_line(colour = "black"), 
+          axis.text = element_text(face="bold",size = 9, colour = "black"),
+          axis.title = element_text(face="bold",size = 9),
+          strip.text = element_text(face="bold",size = 9), 
+          panel.spacing.x = unit(0.6,units = "cm"), 
+          axis.title.y = element_blank(), 
+          legend.position = "none", 
+          plot.title = element_text(hjust = 0.5))
+  if(!is.null(xlim)){
+    p <- p + coord_cartesian(xlim = xlim)
+  }
+  print(p)
+}
+
+## combine S-LDSC enrichment results across traits
+combine_sldsc_traits <- function(trait_name_list, dir_results, baseline){
+  registerDoParallel(cores = 10)
+  
+  result_sLDSC <- foreach(trait = trait_name_list, .combine = rbind)%dopar%{
+    sldsc_results <- read.table(paste0(dir_results,"/", trait, "/", baseline, "/", trait,"_", "hg19_spidex_0.05", "_", baseline, ".results"), header = T, stringsAsFactors = F)
+    sldsc.splicing <- sldsc_results[sldsc_results$Category == "L2_1",]
+    sldsc.splicing$Category <- "splicing"
+    
+    sldsc.combined <- rbind(sldsc.splicing)
+    sldsc.combined <- cbind(Disease = trait, sldsc.combined)
+    sldsc.combined
+  }
+  return(result_sLDSC)
+}
+```
+
+```{r}
+baseline <- "baselineLDv1.1"
+
+dir_results <- "/project2/xinhe/cdu/ldsc/results/splicing"
+result_sLDSC <- combine_sldsc_traits(trait_name_list, dir_results, baseline)
+
+result_sLDSC$Category <- factor(result_sLDSC$Category, levels = rev(annot_list) )
+result_sLDSC$Color <- factor(result_sLDSC$Disease, levels = trait_name_list)
+```
+
+```{r}
+DT::datatable(format(result_sLDSC[,1:8], digits = 2), options = list(scrollX = TRUE, keys = TRUE),rownames = F)
+```
+
+```{r}
+ggplot_enrichment(result_sLDSC, title = "")
+ggplot_log2_enrichment(result_sLDSC, title = "")
+```
+
