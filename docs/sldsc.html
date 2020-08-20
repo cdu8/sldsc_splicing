@@ -326,7 +326,7 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">S-LDSC analysis to estimate the enrichment of GWAS variants in predicted splicing variants</h1>
+<h1 class="title toc-ignore"><strong>S-LDSC analysis to estimate the enrichment of GWAS variants in predicted splicing variants</strong></h1>
 <h4 class="author"><em>Christie Du</em></h4>
 <h4 class="date"><em>2020-08-20</em></h4>
 
@@ -444,16 +444,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomcdu8sldscsplicingtree12a0048eeda24f4ef2fc9dc0abb3898a95bd84edtargetblank12a0048a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/cdu8/sldsc_splicing/tree/12a0048eeda24f4ef2fc9dc0abb3898a95bd84ed" target="_blank">12a0048</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomcdu8sldscsplicingtree180f81c06419731abeadf66930990ccb134c97fctargetblank180f81ca"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/cdu8/sldsc_splicing/tree/180f81c06419731abeadf66930990ccb134c97fc" target="_blank">180f81c</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomcdu8sldscsplicingtree12a0048eeda24f4ef2fc9dc0abb3898a95bd84edtargetblank12a0048a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomcdu8sldscsplicingtree180f81c06419731abeadf66930990ccb134c97fctargetblank180f81ca" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/cdu8/sldsc_splicing/tree/12a0048eeda24f4ef2fc9dc0abb3898a95bd84ed" target="_blank">12a0048</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/cdu8/sldsc_splicing/tree/180f81c06419731abeadf66930990ccb134c97fc" target="_blank">180f81c</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -499,6 +499,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/cdu8/sldsc_splicing/blob/180f81c06419731abeadf66930990ccb134c97fc/analysis/sldsc.Rmd" target="_blank">180f81c</a>
+</td>
+<td>
+cdu8
+</td>
+<td>
+2020-08-20
+</td>
+<td>
+S-LDSC analysis
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/cdu8/sldsc_splicing/6429bae9000f991d9c10695dd537c7a9c55e64b2/docs/sldsc.html" target="_blank">6429bae</a>
+</td>
+<td>
+cdu8
+</td>
+<td>
+2020-08-20
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -558,8 +592,9 @@ S-LDSC analysis
 </div>
 </div>
 <div id="introduction" class="section level2">
-<h2>Introduction</h2>
+<h2><strong>Introduction</strong></h2>
 <p>I ran S-LDSC on SPIDEX splicing annotations. The SPIDEX database was downloaded from ANNOVAR, and SNPs with a dpsi_zscore of &gt;= 1.645 (p-value of 0.05) were selected. I did this for 11 GWAS: Asthma, BMI, CAD, HDL, Height, Intelligence, IBD, LDL, RA, Schizophrenia, and Type II Diabetes. I used BaselineLD v1.1 for S-LDSC analysis.</p>
+<p>SPIDEX splicing annotations are located here: <code>RCC:/project2/xinhe/cdu/ldsc/annot/spidex</code> All GWAS in sumstats format are located here: <code>RCC:/project2/xinhe/cdu/GWAS/ldsc_format</code></p>
 <pre class="r"><code>annot_list &lt;- c(&quot;splicing&quot;)
 trait_name_list &lt;- c(&quot;Asthma&quot;, &quot;BMI&quot;,&quot;CAD&quot;,&quot;HDL&quot;,&quot;Height&quot;,&quot;IBD&quot;,&quot;Intelligence&quot;,&quot;LDL&quot;,&quot;RA&quot;,&quot;Schizophrenia&quot;,&quot;T2D&quot;)</code></pre>
 <pre class="r"><code>library(ggplot2)
