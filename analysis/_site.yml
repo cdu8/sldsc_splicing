@@ -1,7 +1,7 @@
-name: "S-LDSC of Splicing Variants"
+name: S-LDSC of Splicing Variants
 output_dir: ../docs
 navbar:
-  title: "S-LDSC of Splicing Variants"
+  title: S-LDSC of Splicing Variants
   left:
   - text: Home
     href: index.html
@@ -9,6 +9,10 @@ navbar:
     href: about.html
   - text: License
     href: license.html
+  right:
+  - icon: fa-github
+    text: Source code
+    href: https://github.com/cdu8/sldsc_splicing
 output:
   workflowr::wflow_html:
     toc: yes
