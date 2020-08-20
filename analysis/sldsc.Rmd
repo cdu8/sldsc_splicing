@@ -1,5 +1,5 @@
 ---
-title: "S-LDSC analysis to estimate the enrichment of GWAS variants in predicted splicing variants"
+title: "**S-LDSC analysis to estimate the enrichment of GWAS variants in predicted splicing variants**"
 author: "Christie Du"
 date: "2020-08-20"
 output: workflowr::wflow_html
@@ -7,8 +7,11 @@ editor_options:
   chunk_output_type: console
 ---
 
-## Introduction
+## **Introduction**
 I ran S-LDSC on SPIDEX splicing annotations. The SPIDEX database was downloaded from ANNOVAR, and SNPs with a dpsi_zscore of >= 1.645 (p-value of 0.05) were selected. I did this for 11 GWAS: Asthma, BMI, CAD, HDL, Height, Intelligence, IBD, LDL, RA, Schizophrenia, and Type II Diabetes. I used BaselineLD v1.1 for S-LDSC analysis.
+
+SPIDEX splicing annotations are located here: `RCC:/project2/xinhe/cdu/ldsc/annot/spidex`
+All GWAS in sumstats format are located here: `RCC:/project2/xinhe/cdu/GWAS/ldsc_format`
 
 ```{r}
 annot_list <- c("splicing")
