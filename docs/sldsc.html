@@ -353,7 +353,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-08-20
+<strong>Last updated:</strong> 2020-08-22
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -444,16 +444,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomcdu8sldscsplicingtree180f81c06419731abeadf66930990ccb134c97fctargetblank180f81ca"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/cdu8/sldsc_splicing/tree/180f81c06419731abeadf66930990ccb134c97fc" target="_blank">180f81c</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomcdu8sldscsplicingtree78ba3b9ccb0c2512c351f712aa243a095df53385targetblank78ba3b9a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/cdu8/sldsc_splicing/tree/78ba3b9ccb0c2512c351f712aa243a095df53385" target="_blank">78ba3b9</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomcdu8sldscsplicingtree180f81c06419731abeadf66930990ccb134c97fctargetblank180f81ca" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomcdu8sldscsplicingtree78ba3b9ccb0c2512c351f712aa243a095df53385targetblank78ba3b9a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/cdu8/sldsc_splicing/tree/180f81c06419731abeadf66930990ccb134c97fc" target="_blank">180f81c</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/cdu8/sldsc_splicing/tree/78ba3b9ccb0c2512c351f712aa243a095df53385" target="_blank">78ba3b9</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -499,6 +499,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/cdu8/sldsc_splicing/blob/78ba3b9ccb0c2512c351f712aa243a095df53385/analysis/sldsc.Rmd" target="_blank">78ba3b9</a>
+</td>
+<td>
+cdu8
+</td>
+<td>
+2020-08-22
+</td>
+<td>
+wflow_publish(c(“analysis/sldsc.Rmd”))
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/cdu8/sldsc_splicing/7736a9da3119b4fd05ee0520d8c887588a158408/docs/sldsc.html" target="_blank">7736a9d</a>
+</td>
+<td>
+cdu8
+</td>
+<td>
+2020-08-20
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -674,11 +708,11 @@ ggplot_log2_enrichment &lt;- function(result_sLDSC, xlim = NULL, title = &quot;E
 }
 
 ## combine S-LDSC enrichment results across traits
-combine_sldsc_traits &lt;- function(trait_name_list, dir_results, baseline){
+combine_sldsc_traits &lt;- function(trait_name_list, dir_results, baseline, topX, prefix){
   registerDoParallel(cores = 10)
   
   result_sLDSC &lt;- foreach(trait = trait_name_list, .combine = rbind)%dopar%{
-    sldsc_results &lt;- read.table(paste0(dir_results,&quot;/&quot;, trait, &quot;/&quot;, baseline, &quot;/&quot;, trait,&quot;_&quot;, &quot;hg19_spidex_0.05&quot;, &quot;_&quot;, baseline, &quot;.results&quot;), header = T, stringsAsFactors = F)
+    sldsc_results &lt;- read.table(paste0(dir_results,&quot;/&quot;, trait, &quot;/&quot;, baseline, &quot;/&quot;, topX, &quot;/&quot;, trait,&quot;_&quot;, prefix, &quot;_&quot;, baseline, &quot;.results&quot;), header = T, stringsAsFactors = F)
     sldsc.splicing &lt;- sldsc_results[sldsc_results$Category == &quot;L2_1&quot;,]
     sldsc.splicing$Category &lt;- &quot;splicing&quot;
     
@@ -689,16 +723,28 @@ combine_sldsc_traits &lt;- function(trait_name_list, dir_results, baseline){
   return(result_sLDSC)
 }</code></pre>
 <pre class="r"><code>baseline &lt;- &quot;baselineLDv1.1&quot;
-
 dir_results &lt;- &quot;/project2/xinhe/cdu/ldsc/results/splicing&quot;
-result_sLDSC &lt;- combine_sldsc_traits(trait_name_list, dir_results, baseline)
 
-result_sLDSC$Category &lt;- factor(result_sLDSC$Category, levels = rev(annot_list) )
-result_sLDSC$Color &lt;- factor(result_sLDSC$Disease, levels = trait_name_list)</code></pre>
-<pre class="r"><code>DT::datatable(format(result_sLDSC[,1:8], digits = 2), options = list(scrollX = TRUE, keys = TRUE),rownames = F)</code></pre>
+#top5
+result_sLDSC_top5 &lt;- combine_sldsc_traits(trait_name_list, dir_results, baseline, &quot;top5&quot;, &quot;hg19_spidex_0.05&quot;)
+result_sLDSC_top5$Category &lt;- factor(result_sLDSC_top5$Category, levels = rev(annot_list) )
+result_sLDSC_top5$Color &lt;- factor(result_sLDSC_top5$Disease, levels = trait_name_list)
+
+#top2
+result_sLDSC_top2 &lt;- combine_sldsc_traits(trait_name_list, dir_results, baseline, &quot;top2&quot;, &quot;hg19_spidex_0.02&quot;)
+result_sLDSC_top2$Category &lt;- factor(result_sLDSC_top2$Category, levels = rev(annot_list) )
+result_sLDSC_top2$Color &lt;- factor(result_sLDSC_top2$Disease, levels = trait_name_list)
+
+#top10
+result_sLDSC_top10 &lt;- combine_sldsc_traits(trait_name_list, dir_results, baseline, &quot;top10&quot;, &quot;hg19_spidex_0.10&quot;)
+result_sLDSC_top10$Category &lt;- factor(result_sLDSC_top10$Category, levels = rev(annot_list) )
+result_sLDSC_top10$Color &lt;- factor(result_sLDSC_top10$Disease, levels = trait_name_list)</code></pre>
+<div id="top-5-of-spidex-snps" class="section level3">
+<h3>Top 5% of SPIDEX SNPs</h3>
+<pre class="r"><code>DT::datatable(format(result_sLDSC_top5[,1:8], digits = 2), options = list(scrollX = TRUE, keys = TRUE),rownames = F)</code></pre>
 <div id="htmlwidget-578d03fe88b24cf1b205" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-578d03fe88b24cf1b205">{"x":{"filter":"none","data":[["Asthma","BMI","CAD","HDL","Height","IBD","Intelligence","LDL","RA","Schizophrenia","T2D"],["splicing","splicing","splicing","splicing","splicing","splicing","splicing","splicing","splicing","splicing","splicing"],["0.005","0.005","0.005","0.005","0.005","0.005","0.005","0.005","0.005","0.005","0.005"],[" 0.0115"," 0.0224"," 0.0412"," 0.0484","-0.0047"," 0.0809"," 0.0130"," 0.0136"," 0.0746"," 0.0012"," 0.0157"],["0.0441","0.0126","0.0285","0.0302","0.0145","0.0407","0.0099","0.0379","0.0492","0.0104","0.0232"],[" 2.32"," 4.51"," 8.29"," 9.73","-0.94","16.26"," 2.61"," 2.74","14.99"," 0.23"," 3.16"],["8.9","2.5","5.7","6.1","2.9","8.2","2.0","7.6","9.9","2.1","4.7"],["0.881","0.164","0.205","0.157","0.508","0.061","0.420","0.815","0.154","0.714","0.642"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Disease<\/th>\n      <th>Category<\/th>\n      <th>Prop._SNPs<\/th>\n      <th>Prop._h2<\/th>\n      <th>Prop._h2_std_error<\/th>\n      <th>Enrichment<\/th>\n      <th>Enrichment_std_error<\/th>\n      <th>Enrichment_p<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"keys":true,"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
-<pre class="r"><code>ggplot_enrichment(result_sLDSC, title = &quot;&quot;)</code></pre>
+<pre class="r"><code>ggplot_enrichment(result_sLDSC_top5, title = &quot;&quot;)</code></pre>
 <p><img src="figure/sldsc.Rmd/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-1">
@@ -737,7 +783,7 @@ cdu8
 </table>
 </div>
 </div>
-<pre class="r"><code>ggplot_log2_enrichment(result_sLDSC, title = &quot;&quot;)</code></pre>
+<pre class="r"><code>ggplot_log2_enrichment(result_sLDSC_top5, title = &quot;&quot;)</code></pre>
 <p><img src="figure/sldsc.Rmd/unnamed-chunk-5-2.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-2">
@@ -776,6 +822,26 @@ cdu8
 </table>
 </div>
 </div>
+</div>
+<div id="top-2-of-spidex-snps" class="section level3">
+<h3>Top 2% of SPIDEX SNPs</h3>
+<pre class="r"><code>DT::datatable(format(result_sLDSC_top2[,1:8], digits = 2), options = list(scrollX = TRUE, keys = TRUE),rownames = F)</code></pre>
+<div id="htmlwidget-3b4dcd290ae952b4a851" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-3b4dcd290ae952b4a851">{"x":{"filter":"none","data":[["Asthma","BMI","CAD","HDL","Height","IBD","Intelligence","LDL","RA","Schizophrenia","T2D"],["splicing","splicing","splicing","splicing","splicing","splicing","splicing","splicing","splicing","splicing","splicing"],["0.0022","0.0022","0.0022","0.0022","0.0022","0.0022","0.0022","0.0022","0.0022","0.0022","0.0022"],[" 0.00089"," 0.00878"," 0.02319"," 0.02912","-0.00638"," 0.02755"," 0.00317","-0.00746","-0.00518","-0.00420"," 0.00545"],["0.0342","0.0101","0.0216","0.0262","0.0095","0.0273","0.0076","0.0352","0.0310","0.0088","0.0185"],[" 0.4"," 3.9","10.4","13.1","-2.9","12.4"," 1.4","-3.4","-2.3","-1.9"," 2.4"],["15.4"," 4.5"," 9.7","11.8"," 4.3","12.3"," 3.4","15.8","13.9"," 3.9"," 8.3"],["0.97","0.52","0.33","0.31","0.37","0.35","0.90","0.78","0.81","0.46","0.86"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Disease<\/th>\n      <th>Category<\/th>\n      <th>Prop._SNPs<\/th>\n      <th>Prop._h2<\/th>\n      <th>Prop._h2_std_error<\/th>\n      <th>Enrichment<\/th>\n      <th>Enrichment_std_error<\/th>\n      <th>Enrichment_p<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"keys":true,"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>ggplot_enrichment(result_sLDSC_top2, title = &quot;&quot;)</code></pre>
+<p><img src="figure/sldsc.Rmd/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot_log2_enrichment(result_sLDSC_top2, title = &quot;&quot;)</code></pre>
+<p><img src="figure/sldsc.Rmd/unnamed-chunk-7-2.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="top-10-of-spidex-snps" class="section level3">
+<h3>Top 10% of SPIDEX SNPs</h3>
+<pre class="r"><code>DT::datatable(format(result_sLDSC_top10[,1:8], digits = 2), options = list(scrollX = TRUE, keys = TRUE),rownames = F)</code></pre>
+<div id="htmlwidget-817a18af4cae29c47eae" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-817a18af4cae29c47eae">{"x":{"filter":"none","data":[["Asthma","BMI","CAD","HDL","Height","IBD","Intelligence","LDL","RA","Schizophrenia","T2D"],["splicing","splicing","splicing","splicing","splicing","splicing","splicing","splicing","splicing","splicing","splicing"],["0.0087","0.0087","0.0087","0.0087","0.0087","0.0087","0.0087","0.0087","0.0087","0.0087","0.0087"],["0.0033","0.0456","0.0694","0.0465","0.0102","0.1400","0.0135","0.0427","0.0878","0.0170","0.0079"],["0.051","0.018","0.033","0.036","0.017","0.055","0.011","0.038","0.059","0.014","0.026"],[" 0.38"," 5.23"," 7.96"," 5.33"," 1.17","16.05"," 1.54"," 4.89","10.06"," 1.95"," 0.91"],["5.9","2.0","3.8","4.1","2.0","6.3","1.3","4.4","6.7","1.6","3.0"],["0.916","0.040","0.066","0.285","0.932","0.016","0.677","0.369","0.176","0.560","0.976"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Disease<\/th>\n      <th>Category<\/th>\n      <th>Prop._SNPs<\/th>\n      <th>Prop._h2<\/th>\n      <th>Prop._h2_std_error<\/th>\n      <th>Enrichment<\/th>\n      <th>Enrichment_std_error<\/th>\n      <th>Enrichment_p<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"keys":true,"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>ggplot_enrichment(result_sLDSC_top10, title = &quot;&quot;)</code></pre>
+<p><img src="figure/sldsc.Rmd/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot_log2_enrichment(result_sLDSC_top10, title = &quot;&quot;)</code></pre>
+<p><img src="figure/sldsc.Rmd/unnamed-chunk-9-2.png" width="672" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -820,6 +886,7 @@ loaded via a namespace (and not attached):
 [41] xtable_1.8-3     mime_0.6         colorspace_1.3-2 httpuv_1.4.5    
 [45] labeling_0.3     stringi_1.2.4    lazyeval_0.2.1   munsell_0.5.0   
 [49] crayon_1.3.4    </code></pre>
+</div>
 </div>
 </div>
 
