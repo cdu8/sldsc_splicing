@@ -95,11 +95,11 @@ ggplot_log2_enrichment <- function(result_sLDSC, xlim = NULL, title = "Enrichmen
 }
 
 ## combine S-LDSC enrichment results across traits
-combine_sldsc_traits <- function(trait_name_list, dir_results, baseline){
+combine_sldsc_traits <- function(trait_name_list, dir_results, baseline, topX, prefix){
   registerDoParallel(cores = 10)
   
   result_sLDSC <- foreach(trait = trait_name_list, .combine = rbind)%dopar%{
-    sldsc_results <- read.table(paste0(dir_results,"/", trait, "/", baseline, "/", trait,"_", "hg19_spidex_0.05", "_", baseline, ".results"), header = T, stringsAsFactors = F)
+    sldsc_results <- read.table(paste0(dir_results,"/", trait, "/", baseline, "/", topX, "/", trait,"_", prefix, "_", baseline, ".results"), header = T, stringsAsFactors = F)
     sldsc.splicing <- sldsc_results[sldsc_results$Category == "L2_1",]
     sldsc.splicing$Category <- "splicing"
     
@@ -113,20 +113,50 @@ combine_sldsc_traits <- function(trait_name_list, dir_results, baseline){
 
 ```{r}
 baseline <- "baselineLDv1.1"
-
 dir_results <- "/project2/xinhe/cdu/ldsc/results/splicing"
-result_sLDSC <- combine_sldsc_traits(trait_name_list, dir_results, baseline)
 
-result_sLDSC$Category <- factor(result_sLDSC$Category, levels = rev(annot_list) )
-result_sLDSC$Color <- factor(result_sLDSC$Disease, levels = trait_name_list)
+#top5
+result_sLDSC_top5 <- combine_sldsc_traits(trait_name_list, dir_results, baseline, "top5", "hg19_spidex_0.05")
+result_sLDSC_top5$Category <- factor(result_sLDSC_top5$Category, levels = rev(annot_list) )
+result_sLDSC_top5$Color <- factor(result_sLDSC_top5$Disease, levels = trait_name_list)
+
+#top2
+result_sLDSC_top2 <- combine_sldsc_traits(trait_name_list, dir_results, baseline, "top2", "hg19_spidex_0.02")
+result_sLDSC_top2$Category <- factor(result_sLDSC_top2$Category, levels = rev(annot_list) )
+result_sLDSC_top2$Color <- factor(result_sLDSC_top2$Disease, levels = trait_name_list)
+
+#top10
+result_sLDSC_top10 <- combine_sldsc_traits(trait_name_list, dir_results, baseline, "top10", "hg19_spidex_0.10")
+result_sLDSC_top10$Category <- factor(result_sLDSC_top10$Category, levels = rev(annot_list) )
+result_sLDSC_top10$Color <- factor(result_sLDSC_top10$Disease, levels = trait_name_list)
+```
+
+### Top 5% of SPIDEX SNPs
+```{r}
+DT::datatable(format(result_sLDSC_top5[,1:8], digits = 2), options = list(scrollX = TRUE, keys = TRUE),rownames = F)
 ```
 
 ```{r}
-DT::datatable(format(result_sLDSC[,1:8], digits = 2), options = list(scrollX = TRUE, keys = TRUE),rownames = F)
+ggplot_enrichment(result_sLDSC_top5, title = "")
+ggplot_log2_enrichment(result_sLDSC_top5, title = "")
+```
+
+### Top 2% of SPIDEX SNPs
+```{r}
+DT::datatable(format(result_sLDSC_top2[,1:8], digits = 2), options = list(scrollX = TRUE, keys = TRUE),rownames = F)
 ```
 
 ```{r}
-ggplot_enrichment(result_sLDSC, title = "")
-ggplot_log2_enrichment(result_sLDSC, title = "")
+ggplot_enrichment(result_sLDSC_top2, title = "")
+ggplot_log2_enrichment(result_sLDSC_top2, title = "")
 ```
 
+### Top 10% of SPIDEX SNPs
+```{r}
+DT::datatable(format(result_sLDSC_top10[,1:8], digits = 2), options = list(scrollX = TRUE, keys = TRUE),rownames = F)
+```
+
+```{r}
+ggplot_enrichment(result_sLDSC_top10, title = "")
+ggplot_log2_enrichment(result_sLDSC_top10, title = "")
+```
