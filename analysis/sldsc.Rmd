@@ -160,3 +160,12 @@ DT::datatable(format(result_sLDSC_top10[,1:8], digits = 2), options = list(scrol
 ggplot_enrichment(result_sLDSC_top10, title = "")
 ggplot_log2_enrichment(result_sLDSC_top10, title = "")
 ```
+
+### Comparison between the three cutoffs
+```{r}
+library(gridExtra)
+grid.arrange(ggplot_enrichment(result_sLDSC_top5, title = "top 5%"), ggplot_enrichment(result_sLDSC_top2, title = "top 2%"), ggplot_enrichment(result_sLDSC_top10, title = "top 10%"), ncol=3)
+
+grid.arrange(ggplot_log2_enrichment(result_sLDSC_top5, title = "top 5%"), ggplot_log2_enrichment(result_sLDSC_top2, title = "top 2%"), ggplot_log2_enrichment(result_sLDSC_top10, title = "top 10%"), ncol=3)
+```
+
