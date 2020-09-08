@@ -8,7 +8,7 @@ editor_options:
 ---
 
 ## **Introduction**
-I ran S-LDSC on SPIDEX splicing annotations. The SPIDEX database was downloaded from ANNOVAR, and SNPs with a dpsi_zscore of >= 1.645 (p-value of 0.05) were selected. I did this for 11 GWAS: Asthma, BMI, CAD, HDL, Height, Intelligence, IBD, LDL, RA, Schizophrenia, and Type II Diabetes. I used BaselineLD v1.1 for S-LDSC analysis.
+I ran S-LDSC on SPIDEX splicing annotations. The SPIDEX database was downloaded from ANNOVAR. I did this for 11 GWAS: Asthma, BMI, CAD, HDL, Height, Intelligence, IBD, LDL, RA, Schizophrenia, and Type II Diabetes. I used BaselineLD v1.1 for S-LDSC analysis.
 
 SPIDEX splicing annotations are located here: `RCC:/project2/xinhe/cdu/ldsc/annot/spidex`
 All GWAS in sumstats format are located here: `RCC:/project2/xinhe/cdu/GWAS/ldsc_format`
@@ -116,56 +116,40 @@ baseline <- "baselineLDv1.1"
 dir_results <- "/project2/xinhe/cdu/ldsc/results/splicing"
 
 #top5
-result_sLDSC_top5 <- combine_sldsc_traits(trait_name_list, dir_results, baseline, "top5", "hg19_spidex_0.05")
+result_sLDSC_top5 <- combine_sldsc_traits(trait_name_list, dir_results, baseline, "top5_filt", "hg19_spidex_0.05_filt")
 result_sLDSC_top5$Category <- factor(result_sLDSC_top5$Category, levels = rev(annot_list) )
 result_sLDSC_top5$Color <- factor(result_sLDSC_top5$Disease, levels = trait_name_list)
 
 #top2
-result_sLDSC_top2 <- combine_sldsc_traits(trait_name_list, dir_results, baseline, "top2", "hg19_spidex_0.02")
+result_sLDSC_top2 <- combine_sldsc_traits(trait_name_list, dir_results, baseline, "top2_filt", "hg19_spidex_0.02_filt")
 result_sLDSC_top2$Category <- factor(result_sLDSC_top2$Category, levels = rev(annot_list) )
 result_sLDSC_top2$Color <- factor(result_sLDSC_top2$Disease, levels = trait_name_list)
 
 #top10
-result_sLDSC_top10 <- combine_sldsc_traits(trait_name_list, dir_results, baseline, "top10", "hg19_spidex_0.10")
+result_sLDSC_top10 <- combine_sldsc_traits(trait_name_list, dir_results, baseline, "top10_filt", "hg19_spidex_0.10_filt")
 result_sLDSC_top10$Category <- factor(result_sLDSC_top10$Category, levels = rev(annot_list) )
 result_sLDSC_top10$Color <- factor(result_sLDSC_top10$Disease, levels = trait_name_list)
 ```
 
-### Top 5% of SPIDEX SNPs
+### Data Tables
 ```{r}
-DT::datatable(format(result_sLDSC_top5[,1:8], digits = 2), options = list(scrollX = TRUE, keys = TRUE),rownames = F)
+DT::datatable(format(result_sLDSC_top2[,1:8], digits = 2), options = list(scrollX = TRUE, keys = TRUE),rownames = F, caption = 'Table 1. Top 2%')
+
+DT::datatable(format(result_sLDSC_top5[,1:8], digits = 2), options = list(scrollX = TRUE, keys = TRUE),rownames = F, caption = 'Table 2. Top 5%')
+
+DT::datatable(format(result_sLDSC_top10[,1:8], digits = 2), options = list(scrollX = TRUE, keys = TRUE),rownames = F, caption = 'Table 3. Top 10%')
 ```
 
+### Enrichment Plots
 ```{r}
-ggplot_enrichment(result_sLDSC_top5, title = "")
-ggplot_log2_enrichment(result_sLDSC_top5, title = "")
+ggplot_enrichment(result_sLDSC_top2, title = "top 2%")
+ggplot_enrichment(result_sLDSC_top5, title = "top 5%")
+ggplot_enrichment(result_sLDSC_top10, title = "top 10%")
 ```
 
-### Top 2% of SPIDEX SNPs
+### log2(Enrichment) Plots
 ```{r}
-DT::datatable(format(result_sLDSC_top2[,1:8], digits = 2), options = list(scrollX = TRUE, keys = TRUE),rownames = F)
+ggplot_log2_enrichment(result_sLDSC_top2, title = "top 2%")
+ggplot_log2_enrichment(result_sLDSC_top5, title = "top 5%")
+ggplot_log2_enrichment(result_sLDSC_top10, title = "top 10%")
 ```
-
-```{r}
-ggplot_enrichment(result_sLDSC_top2, title = "")
-ggplot_log2_enrichment(result_sLDSC_top2, title = "")
-```
-
-### Top 10% of SPIDEX SNPs
-```{r}
-DT::datatable(format(result_sLDSC_top10[,1:8], digits = 2), options = list(scrollX = TRUE, keys = TRUE),rownames = F)
-```
-
-```{r}
-ggplot_enrichment(result_sLDSC_top10, title = "")
-ggplot_log2_enrichment(result_sLDSC_top10, title = "")
-```
-
-### Comparison between the three cutoffs
-```{r}
-library(gridExtra)
-grid.arrange(ggplot_enrichment(result_sLDSC_top5, title = "top 5%"), ggplot_enrichment(result_sLDSC_top2, title = "top 2%"), ggplot_enrichment(result_sLDSC_top10, title = "top 10%"), ncol=3)
-
-grid.arrange(ggplot_log2_enrichment(result_sLDSC_top5, title = "top 5%"), ggplot_log2_enrichment(result_sLDSC_top2, title = "top 2%"), ggplot_log2_enrichment(result_sLDSC_top10, title = "top 10%"), ncol=3)
-```
-
