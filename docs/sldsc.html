@@ -444,16 +444,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomcdu8sldscsplicingtree79129a3ffae62321b182454f900eae9be9ba866ctargetblank79129a3a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/cdu8/sldsc_splicing/tree/79129a3ffae62321b182454f900eae9be9ba866c" target="_blank">79129a3</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomcdu8sldscsplicingtree70a3cc1c9754718c9ce70edf172eb312eec6d9ectargetblank70a3cc1a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/cdu8/sldsc_splicing/tree/70a3cc1c9754718c9ce70edf172eb312eec6d9ec" target="_blank">70a3cc1</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomcdu8sldscsplicingtree79129a3ffae62321b182454f900eae9be9ba866ctargetblank79129a3a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomcdu8sldscsplicingtree70a3cc1c9754718c9ce70edf172eb312eec6d9ectargetblank70a3cc1a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/cdu8/sldsc_splicing/tree/79129a3ffae62321b182454f900eae9be9ba866c" target="_blank">79129a3</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/cdu8/sldsc_splicing/tree/70a3cc1c9754718c9ce70edf172eb312eec6d9ec" target="_blank">70a3cc1</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -499,6 +499,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/cdu8/sldsc_splicing/blob/70a3cc1c9754718c9ce70edf172eb312eec6d9ec/analysis/sldsc.Rmd" target="_blank">70a3cc1</a>
+</td>
+<td>
+cdu8
+</td>
+<td>
+2020-09-18
+</td>
+<td>
+wflow_publish(c(“analysis/sldsc.Rmd”))
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/cdu8/sldsc_splicing/f8d692904ee9ec47d976181617604126caafe6cc/docs/sldsc.html" target="_blank">f8d6929</a>
+</td>
+<td>
+cdu8
+</td>
+<td>
+2020-09-18
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -897,8 +931,13 @@ result_sLDSC_cont$Color &lt;- factor(result_sLDSC_cont$Disease, levels = trait_n
 </div>
 <div id="top-2" class="section level3">
 <h3>Top 2%</h3>
-<pre class="r"><code>library(gridExtra)
-grid.arrange(ggplot_enrichment(result_sLDSC_top2, title = &quot;&quot;), ggplot_log2_enrichment(result_sLDSC_top2, title = &quot;&quot;), nrow=1, ncol=2)</code></pre>
+<pre class="r"><code>library(cowplot)</code></pre>
+<pre><code>
+Attaching package: &#39;cowplot&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:ggplot2&#39;:
+
+    ggsave</code></pre>
+<pre class="r"><code>plot_top2 &lt;- ggplot_enrichment(result_sLDSC_top2, title = &quot;&quot;)</code></pre>
 <p><img src="figure/sldsc.Rmd/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-1">
@@ -959,6 +998,7 @@ cdu8
 </table>
 </div>
 </div>
+<pre class="r"><code>plot_top2_log2 &lt;- ggplot_log2_enrichment(result_sLDSC_top2, title = &quot;&quot;)</code></pre>
 <p><img src="figure/sldsc.Rmd/unnamed-chunk-5-2.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-2">
@@ -1019,11 +1059,61 @@ cdu8
 </table>
 </div>
 </div>
+<pre class="r"><code>plot_grid(plot_top2, plot_top2_log2, labels=&quot;AUTO&quot;)</code></pre>
+<p><img src="figure/sldsc.Rmd/unnamed-chunk-5-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-3">
+Past versions of unnamed-chunk-5-3.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-5-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/cdu8/sldsc_splicing/blob/93596b93a28d8af4a4b8c5ecf98b634be36d8a7f/docs/figure/sldsc.Rmd/unnamed-chunk-5-3.png" target="_blank">93596b9</a>
+</td>
+<td>
+cdu8
+</td>
+<td>
+2020-09-18
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/cdu8/sldsc_splicing/blob/635efaf0d599e64fda2ac444624e596f7b6f90d6/docs/figure/sldsc.Rmd/unnamed-chunk-5-3.png" target="_blank">635efaf</a>
+</td>
+<td>
+cdu8
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="top-5" class="section level3">
 <h3>Top 5%</h3>
-<pre class="r"><code>library(gridExtra)
-grid.arrange(ggplot_enrichment(result_sLDSC_top5, title = &quot;&quot;), ggplot_log2_enrichment(result_sLDSC_top5, title = &quot;&quot;), nrow=1, ncol=2)</code></pre>
+<pre class="r"><code>library(cowplot)
+plot_top5 &lt;- ggplot_enrichment(result_sLDSC_top5, title = &quot;&quot;)</code></pre>
 <p><img src="figure/sldsc.Rmd/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-1">
@@ -1073,6 +1163,7 @@ cdu8
 </table>
 </div>
 </div>
+<pre class="r"><code>plot_top5_log2 &lt;- ggplot_log2_enrichment(result_sLDSC_top5, title = &quot;&quot;)</code></pre>
 <p><img src="figure/sldsc.Rmd/unnamed-chunk-6-2.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-2">
@@ -1122,11 +1213,61 @@ cdu8
 </table>
 </div>
 </div>
+<pre class="r"><code>plot_grid(plot_top5, plot_top5_log2, labels=&quot;AUTO&quot;)</code></pre>
+<p><img src="figure/sldsc.Rmd/unnamed-chunk-6-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-3">
+Past versions of unnamed-chunk-6-3.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-6-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/cdu8/sldsc_splicing/blob/93596b93a28d8af4a4b8c5ecf98b634be36d8a7f/docs/figure/sldsc.Rmd/unnamed-chunk-6-3.png" target="_blank">93596b9</a>
+</td>
+<td>
+cdu8
+</td>
+<td>
+2020-09-18
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/cdu8/sldsc_splicing/blob/635efaf0d599e64fda2ac444624e596f7b6f90d6/docs/figure/sldsc.Rmd/unnamed-chunk-6-3.png" target="_blank">635efaf</a>
+</td>
+<td>
+cdu8
+</td>
+<td>
+2020-09-08
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="top-10" class="section level3">
 <h3>Top 10%</h3>
-<pre class="r"><code>library(gridExtra)
-grid.arrange(ggplot_enrichment(result_sLDSC_top10, title = &quot;&quot;), ggplot_log2_enrichment(result_sLDSC_top10, title = &quot;&quot;), nrow=1, ncol=2)</code></pre>
+<pre class="r"><code>library(cowplot)
+plot_top10 &lt;- ggplot_enrichment(result_sLDSC_top10, title = &quot;&quot;)</code></pre>
 <p><img src="figure/sldsc.Rmd/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-7-1">
@@ -1187,6 +1328,7 @@ cdu8
 </table>
 </div>
 </div>
+<pre class="r"><code>plot_top10_log2 &lt;- ggplot_log2_enrichment(result_sLDSC_top10, title = &quot;&quot;)</code></pre>
 <p><img src="figure/sldsc.Rmd/unnamed-chunk-7-2.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-7-2">
@@ -1247,11 +1389,13 @@ cdu8
 </table>
 </div>
 </div>
+<pre class="r"><code>plot_grid(plot_top10, plot_top10_log2, labels=&quot;AUTO&quot;)</code></pre>
+<p><img src="figure/sldsc.Rmd/unnamed-chunk-7-3.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="continuous" class="section level3">
 <h3>Continuous</h3>
-<pre class="r"><code>library(gridExtra)
-grid.arrange(ggplot_enrichment(result_sLDSC_cont, title = &quot;&quot;), ggplot_log2_enrichment(result_sLDSC_cont, title = &quot;&quot;), nrow=1, ncol=2)</code></pre>
+<pre class="r"><code>library(cowplot)
+plot_cont &lt;- ggplot_enrichment(result_sLDSC_cont, title = &quot;&quot;)</code></pre>
 <p><img src="figure/sldsc.Rmd/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-8-1">
@@ -1290,6 +1434,7 @@ cdu8
 </table>
 </div>
 </div>
+<pre class="r"><code>plot_cont_log2 &lt;- ggplot_log2_enrichment(result_sLDSC_cont, title = &quot;&quot;)</code></pre>
 <p><img src="figure/sldsc.Rmd/unnamed-chunk-8-2.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-8-2">
@@ -1328,6 +1473,8 @@ cdu8
 </table>
 </div>
 </div>
+<pre class="r"><code>plot_grid(plot_cont, plot_cont_log2, labels=&quot;AUTO&quot;)</code></pre>
+<p><img src="figure/sldsc.Rmd/unnamed-chunk-8-3.png" width="672" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1356,7 +1503,7 @@ attached base packages:
 [8] base     
 
 other attached packages:
-[1] gridExtra_2.3     doParallel_1.0.14 iterators_1.0.10  foreach_1.4.4    
+[1] cowplot_0.9.4     doParallel_1.0.14 iterators_1.0.10  foreach_1.4.4    
 [5] ggplot2_3.1.1    
 
 loaded via a namespace (and not attached):
