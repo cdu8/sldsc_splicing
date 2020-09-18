@@ -147,35 +147,42 @@ DT::datatable(format(result_sLDSC_top10[,1:8], digits = 2), options = list(scrol
 DT::datatable(format(result_sLDSC_cont[,1:8], digits = 2), options = list(scrollX = TRUE, keys = TRUE),rownames = F, caption = 'Table 4. Continuous Annotations')
 ```
 
+```{r, fig.show='hide'}
+plot_top2 <- ggplot_enrichment(result_sLDSC_top2, title = "")
+plot_top2_log2 <- ggplot_log2_enrichment(result_sLDSC_top2, title = "")
+
+plot_top5 <- ggplot_enrichment(result_sLDSC_top5, title = "")
+plot_top5_log2 <- ggplot_log2_enrichment(result_sLDSC_top5, title = "")
+
+plot_top10 <- ggplot_enrichment(result_sLDSC_top10, title = "")
+plot_top10_log2 <- ggplot_log2_enrichment(result_sLDSC_top10, title = "")
+
+plot_cont <- ggplot_enrichment(result_sLDSC_cont, title = "")
+plot_cont_log2 <- ggplot_log2_enrichment(result_sLDSC_cont, title = "")
+```
+
+
 ### Top 2%
 ```{r}
 library(cowplot)
-plot_top2 <- ggplot_enrichment(result_sLDSC_top2, title = "")
-plot_top2_log2 <- ggplot_log2_enrichment(result_sLDSC_top2, title = "")
 plot_grid(plot_top2, plot_top2_log2, labels="AUTO")
 ```
 
 ### Top 5%
 ```{r}
 library(cowplot)
-plot_top5 <- ggplot_enrichment(result_sLDSC_top5, title = "")
-plot_top5_log2 <- ggplot_log2_enrichment(result_sLDSC_top5, title = "")
 plot_grid(plot_top5, plot_top5_log2, labels="AUTO")
 ```
 
 ### Top 10%
 ```{r}
 library(cowplot)
-plot_top10 <- ggplot_enrichment(result_sLDSC_top10, title = "")
-plot_top10_log2 <- ggplot_log2_enrichment(result_sLDSC_top10, title = "")
 plot_grid(plot_top10, plot_top10_log2, labels="AUTO")
 ```
 
 ### Continuous
 ```{r}
 library(cowplot)
-plot_cont <- ggplot_enrichment(result_sLDSC_cont, title = "")
-plot_cont_log2 <- ggplot_log2_enrichment(result_sLDSC_cont, title = "")
 plot_grid(plot_cont, plot_cont_log2, labels="AUTO")
 ```
 
