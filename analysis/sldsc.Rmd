@@ -150,24 +150,24 @@ DT::datatable(format(result_sLDSC_cont[,1:8], digits = 2), options = list(scroll
 ### Top 2%
 ```{r}
 library(gridExtra)
-grid.arrange(ggplot_enrichment(result_sLDSC_top2, title = ""), ggplot_log2_enrichment(result_sLDSC_top2, title = ""), ncol=2)
+grid.arrange(ggplot_enrichment(result_sLDSC_top2, title = ""), ggplot_log2_enrichment(result_sLDSC_top2, title = ""), nrow=1, ncol=2)
 ```
 
 ### Top 5%
 ```{r}
 library(gridExtra)
-grid.arrange(ggplot_enrichment(result_sLDSC_top5, title = ""), ggplot_log2_enrichment(result_sLDSC_top5, title = ""), ncol=2)
+grid.arrange(ggplot_enrichment(result_sLDSC_top5, title = ""), ggplot_log2_enrichment(result_sLDSC_top5, title = ""), nrow=1, ncol=2)
 ```
 
 ### Top 10%
 ```{r}
 library(gridExtra)
-grid.arrange(ggplot_enrichment(result_sLDSC_top10, title = ""), ggplot_log2_enrichment(result_sLDSC_top10, title = ""), ncol=2)
+grid.arrange(ggplot_enrichment(result_sLDSC_top10, title = ""), ggplot_log2_enrichment(result_sLDSC_top10, title = ""), nrow=1, ncol=2)
 ```
 
 ### Continuous
 ```{r}
 library(gridExtra)
-grid.arrange(ggplot_enrichment(result_sLDSC_cont, title = ""), ggplot_log2_enrichment(result_sLDSC_cont, title = ""), ncol=2)
+grid.arrange(ggplot_enrichment(result_sLDSC_cont, title = ""), ggplot_log2_enrichment(result_sLDSC_cont, title = ""), nrow=1, ncol=2)
 ```
 
