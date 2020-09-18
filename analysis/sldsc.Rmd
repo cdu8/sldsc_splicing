@@ -116,19 +116,24 @@ baseline <- "baselineLDv1.1"
 dir_results <- "/project2/xinhe/cdu/ldsc/results/splicing"
 
 #top5
-result_sLDSC_top5 <- combine_sldsc_traits(trait_name_list, dir_results, baseline, "top5_filt", "hg19_spidex_0.05_filt")
+result_sLDSC_top5 <- combine_sldsc_traits(trait_name_list, dir_results, baseline, "top5", "hg19_spidex_0.05")
 result_sLDSC_top5$Category <- factor(result_sLDSC_top5$Category, levels = rev(annot_list) )
 result_sLDSC_top5$Color <- factor(result_sLDSC_top5$Disease, levels = trait_name_list)
 
 #top2
-result_sLDSC_top2 <- combine_sldsc_traits(trait_name_list, dir_results, baseline, "top2_filt", "hg19_spidex_0.02_filt")
+result_sLDSC_top2 <- combine_sldsc_traits(trait_name_list, dir_results, baseline, "top2", "hg19_spidex_0.02")
 result_sLDSC_top2$Category <- factor(result_sLDSC_top2$Category, levels = rev(annot_list) )
 result_sLDSC_top2$Color <- factor(result_sLDSC_top2$Disease, levels = trait_name_list)
 
 #top10
-result_sLDSC_top10 <- combine_sldsc_traits(trait_name_list, dir_results, baseline, "top10_filt", "hg19_spidex_0.10_filt")
+result_sLDSC_top10 <- combine_sldsc_traits(trait_name_list, dir_results, baseline, "top10", "hg19_spidex_0.10")
 result_sLDSC_top10$Category <- factor(result_sLDSC_top10$Category, levels = rev(annot_list) )
 result_sLDSC_top10$Color <- factor(result_sLDSC_top10$Disease, levels = trait_name_list)
+
+#continuous
+result_sLDSC_cont <- combine_sldsc_traits(trait_name_list, dir_results, baseline, "continuous", "hg19_spidex_dpsi_zscore")
+result_sLDSC_cont$Category <- factor(result_sLDSC_cont$Category, levels = rev(annot_list) )
+result_sLDSC_cont$Color <- factor(result_sLDSC_cont$Disease, levels = trait_name_list)
 ```
 
 ### Data Tables
@@ -138,18 +143,31 @@ DT::datatable(format(result_sLDSC_top2[,1:8], digits = 2), options = list(scroll
 DT::datatable(format(result_sLDSC_top5[,1:8], digits = 2), options = list(scrollX = TRUE, keys = TRUE),rownames = F, caption = 'Table 2. Top 5%')
 
 DT::datatable(format(result_sLDSC_top10[,1:8], digits = 2), options = list(scrollX = TRUE, keys = TRUE),rownames = F, caption = 'Table 3. Top 10%')
+
+DT::datatable(format(result_sLDSC_cont[,1:8], digits = 2), options = list(scrollX = TRUE, keys = TRUE),rownames = F, caption = 'Table 4. Continuous Annotations')
 ```
 
-### Enrichment Plots
+### Top 2%
 ```{r}
-ggplot_enrichment(result_sLDSC_top2, title = "top 2%")
-ggplot_enrichment(result_sLDSC_top5, title = "top 5%")
-ggplot_enrichment(result_sLDSC_top10, title = "top 10%")
+library(gridExtra)
+grid.arrange(ggplot_enrichment(result_sLDSC_top2, title = ""), ggplot_log2_enrichment(result_sLDSC_top2, title = ""), ncol=2)
 ```
 
-### log2(Enrichment) Plots
+### Top 5%
 ```{r}
-ggplot_log2_enrichment(result_sLDSC_top2, title = "top 2%")
-ggplot_log2_enrichment(result_sLDSC_top5, title = "top 5%")
-ggplot_log2_enrichment(result_sLDSC_top10, title = "top 10%")
+library(gridExtra)
+grid.arrange(ggplot_enrichment(result_sLDSC_top5, title = ""), ggplot_log2_enrichment(result_sLDSC_top5, title = ""), ncol=2)
 ```
+
+### Top 10%
+```{r}
+library(gridExtra)
+grid.arrange(ggplot_enrichment(result_sLDSC_top10, title = ""), ggplot_log2_enrichment(result_sLDSC_top10, title = ""), ncol=2)
+```
+
+### Continuous
+```{r}
+library(gridExtra)
+grid.arrange(ggplot_enrichment(result_sLDSC_cont, title = ""), ggplot_log2_enrichment(result_sLDSC_cont, title = ""), ncol=2)
+```
+
