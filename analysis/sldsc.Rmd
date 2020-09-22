@@ -186,3 +186,10 @@ library(cowplot)
 plot_grid(plot_cont, plot_cont_log2, labels="AUTO")
 ```
 
+### %GWAS SNPs with Spidex Scores
+```{r}
+splicing_dir <- '/home/cdu8/projects/splicing'
+percent_snps <- read.table(paste0(splicing_dir,'/','percent_variants.txt'),header = T,stringsAsFactors = F)
+DT::datatable(percent_snps[percent_snps$GWAS!='Average',], options = list(scrollX = TRUE, keys = TRUE),class = 'cell-border stripe',style = 'bootstrap',rownames = F)
+```
+
