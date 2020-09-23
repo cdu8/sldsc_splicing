@@ -357,7 +357,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-09-22
+<strong>Last updated:</strong> 2020-09-23
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -448,16 +448,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomcdu8sldscsplicingtree702631e7f5ab73ed8b85e43103d91d808a65580dtargetblank702631ea"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/cdu8/sldsc_splicing/tree/702631e7f5ab73ed8b85e43103d91d808a65580d" target="_blank">702631e</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomcdu8sldscsplicingtree78323acba21f1a9b3160e1613fee2eea43d3bc69targetblank78323aca"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/cdu8/sldsc_splicing/tree/78323acba21f1a9b3160e1613fee2eea43d3bc69" target="_blank">78323ac</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomcdu8sldscsplicingtree702631e7f5ab73ed8b85e43103d91d808a65580dtargetblank702631ea" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomcdu8sldscsplicingtree78323acba21f1a9b3160e1613fee2eea43d3bc69targetblank78323aca" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/cdu8/sldsc_splicing/tree/702631e7f5ab73ed8b85e43103d91d808a65580d" target="_blank">702631e</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/cdu8/sldsc_splicing/tree/78323acba21f1a9b3160e1613fee2eea43d3bc69" target="_blank">78323ac</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -503,6 +503,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/cdu8/sldsc_splicing/blob/78323acba21f1a9b3160e1613fee2eea43d3bc69/analysis/sldsc.Rmd" target="_blank">78323ac</a>
+</td>
+<td>
+cdu8
+</td>
+<td>
+2020-09-23
+</td>
+<td>
+wflow_publish(c(“analysis/sldsc.Rmd”))
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/cdu8/sldsc_splicing/9d1251794e83cbbf1b09597c732af764cfe3dbbc/docs/sldsc.html" target="_blank">9d12517</a>
+</td>
+<td>
+cdu8
+</td>
+<td>
+2020-09-22
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1295,9 +1329,11 @@ cdu8
 <h3>%GWAS SNPs with Spidex Scores</h3>
 <pre class="r"><code>splicing_dir &lt;- &#39;/home/cdu8/projects/splicing&#39;
 percent_snps &lt;- read.table(paste0(splicing_dir,&#39;/&#39;,&#39;percent_variants.txt&#39;),header = T,stringsAsFactors = F)
+colnames(percent_snps) &lt;- c(&quot;GWAS&quot;,&quot;No. of SNPs w/ Spidex Scores&quot;,&quot;Total Num SNPs&quot;,&quot;% of SNPs w/ Spidex Scores&quot;)
+percent_snps$`% of SNPs w/ Spidex Scores` &lt;- (percent_snps$`% of SNPs w/ Spidex Scores`)*100
 DT::datatable(percent_snps[percent_snps$GWAS!=&#39;Average&#39;,], options = list(scrollX = TRUE, keys = TRUE),class = &#39;cell-border stripe&#39;,style = &#39;bootstrap&#39;,rownames = F)</code></pre>
 <div id="htmlwidget-e324fff3ef115f8a5fcb" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-e324fff3ef115f8a5fcb">{"x":{"style":"bootstrap","filter":"none","data":[["ASTHMA","CAD","HDL","IBD","LDL","RA","SCZ","BMI","HEIGHT","INTELLIGENCE","T2D"],[79576,264398,93299,13205,92867,286462,273025,81319,98397,310558,84596],[2001280,7947837,2447441,157115,2437751,9739303,9075843,2092511,2528514,9295118,2473441],[0.0397625519667413,0.0332666611054052,0.0381210415286824,0.0840467173726251,0.0380953592060879,0.0294129877671944,0.0300826049987863,0.0388619223507069,0.0389149516277149,0.0334108722449785,0.0342017456652493]],"container":"<table class=\"table table-bordered table-striped\">\n  <thead>\n    <tr>\n      <th>GWAS<\/th>\n      <th>Num_SNPs_with_spidex_score<\/th>\n      <th>Total_SNPs<\/th>\n      <th>Percent_SNPs_with_spidex_scores<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"keys":true,"columnDefs":[{"className":"dt-right","targets":[1,2,3]}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-e324fff3ef115f8a5fcb">{"x":{"style":"bootstrap","filter":"none","data":[["ASTHMA","CAD","HDL","IBD","LDL","RA","SCZ","BMI","HEIGHT","INTELLIGENCE","T2D"],[79576,264398,93299,13205,92867,286462,273025,81319,98397,310558,84596],[2001280,7947837,2447441,157115,2437751,9739303,9075843,2092511,2528514,9295118,2473441],[3.97625519667413,3.32666611054052,3.81210415286824,8.40467173726251,3.80953592060879,2.94129877671944,3.00826049987863,3.88619223507069,3.89149516277149,3.34108722449785,3.42017456652493]],"container":"<table class=\"table table-bordered table-striped\">\n  <thead>\n    <tr>\n      <th>GWAS<\/th>\n      <th>No. of SNPs w/ Spidex Scores<\/th>\n      <th>Total Num SNPs<\/th>\n      <th>% of SNPs w/ Spidex Scores<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"keys":true,"columnDefs":[{"className":"dt-right","targets":[1,2,3]}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
