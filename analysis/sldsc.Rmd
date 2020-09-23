@@ -190,6 +190,8 @@ plot_grid(plot_cont, plot_cont_log2, labels="AUTO")
 ```{r}
 splicing_dir <- '/home/cdu8/projects/splicing'
 percent_snps <- read.table(paste0(splicing_dir,'/','percent_variants.txt'),header = T,stringsAsFactors = F)
+colnames(percent_snps) <- c("GWAS","No. of SNPs w/ Spidex Scores","Total Num SNPs","% of SNPs w/ Spidex Scores")
+percent_snps$`% of SNPs w/ Spidex Scores` <- (percent_snps$`% of SNPs w/ Spidex Scores`)*100
 DT::datatable(percent_snps[percent_snps$GWAS!='Average',], options = list(scrollX = TRUE, keys = TRUE),class = 'cell-border stripe',style = 'bootstrap',rownames = F)
 ```
 
